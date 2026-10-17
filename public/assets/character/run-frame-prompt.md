@@ -1,0 +1,7 @@
+# 跑步第二帧
+
+使用内置 imagegen，以 `move-simple.png` 为编辑参考，最终保存为 `move-simple-02.png`。采用收腿过渡姿势，与原跨步姿势循环。源图未修改。
+
+## 最终提示词
+
+Use case: precise-object-edit. Create ONE complementary running animation frame by editing this exact transparent pixel sprite. LOCK THE ENTIRE UPPER BODY: head, face, bows, hair, shoulders, hands and cannon must stay at exactly the same positions, shapes, size, colors and simple pixel detail as the supplied image. Same square canvas, transparent background and scale. ONLY CHANGE BOTH LEGS below the green skirt. The source has a very wide spread running stride, with boots far apart. The NEW FRAME MUST LOOK OBVIOUSLY DIFFERENT IN THE LEGS: make the RUNNING PASSING POSE with BOTH KNEES CLOSE TOGETHER directly UNDER THE HIPS, and the two BOOTS CLOSE TOGETHER in the center beneath the skirt. One boot points straight down and touches the same ground baseline, the other boot is lifted just behind it, knee bent. Do NOT repeat the wide split stride. Do NOT leave a boot extending far left or far right. Keep legs compact, so the two foot silhouettes almost overlap under the body. This is the passing step that alternates with the provided extended-stride frame to create a readable two-frame run cycle. Preserve the existing tiny chunky pixel style and all costume colors. Whole character still faces RIGHT and holds cannon aimed RIGHT. No firing, no text, no frame grid, no ground or shadow, no extra character. True alpha PNG, one single frame. No whole-image horizontal flip or camera change.

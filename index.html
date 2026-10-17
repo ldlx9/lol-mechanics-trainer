@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#101c20" />
+    <meta name="description" content="原创 2D ADC 操作训练场。第四阶段：兵线补刀、走 A 与八方向屏外技能躲避。" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>ADC LAB · 走 A 训练场</title>
+  </head>
+  <body>
+    <div id="app">
+      <main id="arena" aria-label="ADC 训练场">
+        <button type="button" id="sidebar-toggle" aria-controls="training-sidebar" aria-expanded="true">收起数据栏 ›</button>
+        <div class="playfield">
+          <div id="game">
+            <div class="game-telemetry" aria-label="帧率与移动速度">
+              <span id="fps">— FPS</span>
+              <span>移速 <b id="speed">0</b></span>
+            </div>
+          </div>
+        </div>
+        <section id="training-sidebar" class="controls-panel" aria-label="训练数据与设置">
+            <h1 class="panel-title">训练数据</h1>
+            <div class="generation-switches" role="group" aria-label="训练内容开关">
+              <button type="button" id="minions-toggle" aria-pressed="true" title="关闭后立即清除场上小兵及其攻击">兵线生成 <b>开</b></button>
+              <button type="button" id="skillshots-toggle" aria-pressed="true" title="关闭后立即清除场外技能弹道">场外技能 <b>开</b></button>
+            </div>
+            <div class="difficulty-row"><span>技能难度</span><div class="difficulty-switch" role="group" aria-label="技能难度"><button type="button" id="difficulty-easy" aria-pressed="true" title="简单：约 3 秒一发">简单</button><button type="button" id="difficulty-advanced" aria-pressed="false" title="进阶：约 0.5 秒一发，频率约 6 倍">进阶</button></div><span id="difficulty-rate" aria-live="polite">约 3.0 秒 / 发</span></div>
+            <section class="lane-stats" aria-label="补刀训练数据">
+              <div class="lane-score-grid"><div><span>补刀 CS</span><strong id="cs">0</strong></div><div><span>漏刀</span><strong id="missed">0</strong></div><div><span>成功率</span><strong id="cs-rate">—</strong></div><div><span>总死亡</span><strong id="minion-deaths">0</strong></div></div>
+              <div class="wave-meta"><span>第 <b id="wave-number">0</b> 波</span><span>下一波 <b id="next-wave">0.5s</b></span><time id="lane-time">00:00</time></div>
+              <div class="lane-counts"><span class="blue-unit">蓝方 <b id="blue-count">0</b></span><span class="red-unit">红方 <b id="red-count">0</b></span><span id="lane-status">炮车每 3 波 · 黄血条可一击补刀</span></div>
+            </section>
+            <section class="dodge-stats" aria-label="屏外技能躲避训练数据">
+              <div class="health-heading"><span>生命值 <b id="player-health">1000 / 1000</b></span><span id="health-status">训练中</span></div>
+              <div class="health-track"><i id="health-fill"></i></div>
+              <div class="dodge-score-grid"><div><span>技能命中</span><strong id="skill-hits">0</strong></div><div><span>有效躲避</span><strong id="skill-dodges">0</strong></div><div><span>小兵挡下</span><strong id="skill-blocked">0</strong></div><div><span>保护免伤</span><strong id="skill-protected">0</strong></div></div>
+              <div class="skill-meta"><span id="skill-last">等待屏外来袭</span><span>场上 <b id="skill-active">0</b> · 下次 <b id="skill-next">2.0s</b></span></div>
+              <div class="skill-legend"><span class="piercing-key">穿透</span><span class="spear-key">长矛</span><span class="energy-key">能量</span><small>只统计真实威胁的躲避</small></div>
+            </section>
+            <div class="combat-readout" id="combat-readout" data-state="Idle">
+              <div class="attack-state-row"><strong id="attack-state">待命</strong><span id="attack-target">未选择目标</span><span>冷却 <b id="attack-cooldown">0.00s</b></span></div>
+              <div class="attack-track"><i id="attack-progress"></i></div>
+              <div id="attack-description">左键点击红方小兵，开始普通攻击</div>
+            </div>
+            <div class="attack-aim" id="attack-aim">按 A 显示射程并进入攻击移动</div>
+            <div class="control-row"><kbd>左键红兵</kbd><span>持续普攻</span><span class="control-separator"></span><kbd>A + 左键</kbd><span>攻击移动</span><span class="control-separator"></span><kbd>右键</kbd><span>移动 / 取消后摇</span><kbd>S</kbd><span>立即停止</span></div>
+            <div class="attack-counters"><span>发射 <b id="shots-fired">0</b></span><span>命中 <b id="hits-landed">0</b></span><span>取消前摇 <b id="cancelled-windups">0</b></span></div>
+            <p class="phase-note">右键穿插移动躲避屏外来袭。长矛与能量可被蓝方兵挡住；紫色穿透弹不会被阻挡。</p>
+          </section>
+      </main>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

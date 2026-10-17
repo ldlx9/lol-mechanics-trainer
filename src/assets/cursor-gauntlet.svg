@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="26" viewBox="0 0 48 52" shape-rendering="crispEdges">
+  <!-- 原创像素金手套；缩小一半，实际显示热点为 (4,3)，仍位于食指尖。 -->
+  <path d="M6 3h6v3h3v5h3v6h3v-3h6v2h5v3h5v5h3v8h2v7h-2v3h5v5h-4v3H23v-2h-7v-5h1v-5h-4v-4h-3v-9h4v-4h-3v-5H8v-5H5V6h1Z" fill="#111814"/>
+  <path d="M8 6h4v5h3v6h3v6h-5v-6h-3v-5H8Z" fill="#e6cf7b"/>
+  <path d="M8 6h3v5H8Zm3 6h3v5h-3Zm4 6h3v4h-3Z" fill="#fff0ba"/>
+  <path d="M20 18h6v2h5v2h5v6h3v10l-6 5H21l-4-7V25h3Z" fill="#caa33e"/>
+  <path d="M20 18h5v5h-5Zm7 2h4v6h-4Zm6 4h3v5h-3Z" fill="#f4dc83"/>
+  <path d="M19 26h6v5h-6Zm8 2h6v6h-6Zm7 3h4v6h-4Z" fill="#e2bd58"/>
+  <path d="M18 32h5v7h10v-3h5v4l-6 4H21l-3-5Z" fill="#8e642a"/>
+  <path d="M14 27h4v7h3v5h-4v-4h-4Z" fill="#c5d6ba"/>
+  <path d="M13 28h2v6h-2Zm4 7h3v3h-3Z" fill="#eef0cf"/>
+  <path d="M21 41h12l6-4v6l-6 4H20v-4Z" fill="#d8b45c"/>
+  <path d="M22 43h10l6-3v3l-6 3H22Z" fill="#fff0a5"/>
+  <path d="M20 46h14l7-3v4l-5 2H22l-4-2v-3h2Z" fill="#94b5a7"/>
+  <path d="M22 47h13v2H22Z" fill="#d8e5c4"/>
+  <path d="M23 24h4v3h-4Zm8 13h3v3h-3Z" fill="#fff0a5"/>
+</svg>

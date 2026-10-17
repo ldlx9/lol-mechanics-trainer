@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>跑步五帧预览</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 32px 20px; background: #12231f; color: #e3efd6; font: 15px/1.7 system-ui, sans-serif; }
+    main { max-width: 1000px; margin: auto; }
+    h1 { font-size: 24px; margin: 0 0 4px; }
+    p { margin: 0 0 24px; color: #adc0ae; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    figure { margin: 0; padding: 12px; border: 1px solid #3a5145; border-radius: 12px; background: #1d3028; }
+    .stage { position: relative; aspect-ratio: 1; background: repeating-conic-gradient(#22382d 0% 25%, #294033 0% 50%) 50% / 24px 24px; border-radius: 6px; overflow: hidden; }
+    img { width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; display: block; }
+    figcaption { padding: 10px 0 0; }
+    .loop img { position: absolute; inset: 0; }
+    button { margin: 20px 0; padding: 8px 18px; border-radius: 6px; border: 1px solid #7a9e65; background: #c7dc90; color: #17291d; cursor: pointer; font: inherit; }
+    a { color: #d8eaa5; }
+    @media (max-width: 700px) { body { padding: 20px 12px; } .grid { grid-template-columns: 1fr 1fr; gap: 12px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>跑步动作 · 五帧循环</h1>
+    <p id="status">补齐两侧迈腿过渡，5 张独立素材按 8 步循环，每步 70 毫秒。透明格用于检查轮廓和对齐。</p>
+    <div class="grid">
+      <figure><div class="stage"><img src="move-simple.png" alt="原跑步第一帧"></div><figcaption>跨步 · 原第 1 帧</figcaption></figure>
+      <figure><div class="stage"><img src="move-simple-04.png" alt="新增第四帧，第一侧迈腿过渡"></div><figcaption>迈腿过渡 · 新增第 4 帧</figcaption></figure>
+      <figure><div class="stage"><img src="move-simple-02.png" alt="原跑步第二帧，收腿"></div><figcaption>收腿 · 原第 2 帧</figcaption></figure>
+      <figure><div class="stage"><img src="move-simple-05.png" alt="新增第五帧，另一侧迈腿过渡"></div><figcaption>换脚过渡 · 新增第 5 帧</figcaption></figure>
+      <figure><div class="stage"><img src="move-simple-03.png" alt="原跑步第三帧，另一侧跨步"></div><figcaption>换脚跨步 · 原第 3 帧</figcaption></figure>
+      <figure><div class="stage loop"><img id="loop" src="move-simple.png" alt="五帧跑步循环预览"></div><figcaption>五帧循环预览</figcaption></figure>
+    </div>
+    <button id="toggle" type="button" aria-pressed="false" disabled>暂停预览</button>
+    <p><a href="/">返回训练场</a></p>
+  </main>
+  <script>
+    const button = document.querySelector('#toggle');
+    const loop = document.querySelector('#loop');
+    const timeline = [
+      'move-simple.png', 'move-simple-04.png', 'move-simple-02.png', 'move-simple-05.png',
+      'move-simple-03.png', 'move-simple-05.png', 'move-simple-02.png', 'move-simple-04.png',
+    ];
+    let paused = false;
+    button.addEventListener('click', () => {
+      paused = !paused;
+      button.setAttribute('aria-pressed', String(paused));
+      button.textContent = paused ? '继续预览' : '暂停预览';
+    });
+    // 全部图片解码后再开始，使用实际经过时间切帧，避免首次切换闪空。
+    Promise.all([...new Set(timeline)].map(src => {
+      const image = new Image();
+      image.src = src;
+      return image.decode();
+    })).then(() => {
+      button.disabled = false;
+      let previous;
+      let elapsed = 0;
+      let current = 0;
+      const animate = timestamp => {
+        if (previous !== undefined && !paused) elapsed += timestamp - previous;
+        previous = timestamp;
+        const index = Math.floor(elapsed / 70) % timeline.length;
+        if (index !== current) { current = index; loop.src = timeline[index]; }
+        requestAnimationFrame(animate);
+      };
+      requestAnimationFrame(animate);
+    }).catch(() => {
+      document.querySelector('#status').textContent = '素材未能完整加载，请刷新页面重试。';
+    });
+  </script>
+</body>
+</html>

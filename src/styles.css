@@ -1,0 +1,159 @@
+:root {
+  font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+  color: #dde7d8;
+  background: #0b1513;
+  font-synthesis: none;
+  color-scheme: dark;
+  -webkit-font-smoothing: antialiased;
+}
+* { box-sizing: border-box; }
+html, body, #app { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+#app, #app button, #app #game canvas { cursor: url('./assets/cursor-gauntlet.svg') 4 3, default; }
+#app #game canvas.attack-target-cursor { cursor: url('./assets/cursor-attack.svg') 16 16, crosshair; }
+button { font: inherit; color: inherit; }
+button:focus-visible { outline: 2px solid #d3da97; outline-offset: 2px; }
+button:hover { border-color: #a8b476; }
+button:active { background: #cadc9230; }
+
+#arena {
+  --panel-width: 300px;
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--panel-width);
+  grid-template-rows: minmax(0, 1fr);
+  gap: 12px;
+  padding: 12px;
+}
+#arena.sidebar-collapsed { grid-template-columns: minmax(0, 1fr); }
+#sidebar-toggle {
+  position: fixed;
+  z-index: 10;
+  top: 22px;
+  right: 22px;
+  padding: 5px 8px;
+  border: 1px solid #849b7040;
+  border-radius: 4px;
+  background: #12211cf2;
+  color: #bac8ac;
+  font-size: 11px;
+}
+.playfield { min-width: 0; min-height: 0; display: grid; place-items: center; }
+#game {
+  position: relative;
+  width: min(100%, calc((100dvh - 48px) * 1.4));
+  aspect-ratio: 1540 / 1100;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  outline: 1px solid #85956a45;
+  background: #263d32;
+  isolation: isolate;
+}
+#game canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.game-telemetry {
+  position: absolute;
+  z-index: 2;
+  top: 8px;
+  left: 10px;
+  display: flex;
+  gap: 12px;
+  pointer-events: none;
+  font: 11px/1.4 Consolas, "Microsoft YaHei", monospace;
+  color: #e2ead8;
+  text-shadow: 0 1px 2px #000, 0 0 4px #000;
+}
+.game-telemetry b { font-weight: 400; }
+#game.is-hit { outline-color: #e79e89; box-shadow: 0 0 14px #c65b4d70; }
+
+.controls-panel {
+  height: 100%;
+  min-height: 0;
+  padding: 16px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #687a62 #152522;
+  background: #12211c;
+  border: 1px solid #81937230;
+  border-radius: 4px;
+}
+.controls-panel[hidden] { display: none; }
+.panel-title { margin: 0 90px 14px 0; font-size: 14px; font-weight: 500; color: #d5ddc7; }
+.generation-switches { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.generation-switches button {
+  display: flex; align-items: center; justify-content: space-between; gap: 6px;
+  padding: 8px 9px; font-size: 11px; border: 1px solid #849b7040;
+  border-radius: 4px; background: #091b1955; color: #9dae9d;
+}
+.generation-switches b { font-weight: 500; color: #859588; }
+.generation-switches button[aria-pressed="true"] { border-color: #a0bb7566; background: #9aac6920; color: #d7e5bc; }
+.generation-switches button[aria-pressed="true"] b { color: #c4e998; }
+.difficulty-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 12px; font-size: 10px; color: #a7baa0; }
+.difficulty-switch { display: flex; gap: 2px; padding: 2px; border: 1px solid #8fa18133; border-radius: 4px; background: #091b1955; }
+.difficulty-switch button { font-size: 11px; padding: 4px 8px; background: transparent; border: 1px solid transparent; border-radius: 3px; color: #8fa78f; }
+.difficulty-switch button[aria-pressed="true"] { color: #f0d99e; border-color: #c8b47d66; background: #bca76820; }
+.difficulty-switch #difficulty-advanced[aria-pressed="true"] { color: #f4b49b; border-color: #d48e7255; background: #c6846120; }
+#difficulty-rate { font-size: 9px; color: #9eaf93; white-space: nowrap; margin-left: auto; }
+
+.lane-stats, .dodge-stats, .combat-readout { margin-top: 14px; padding-top: 14px; border-top: 1px solid #b8b57c24; }
+.lane-score-grid, .dodge-score-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.lane-score-grid span, .dodge-score-grid span { display: block; font-size: 10px; color: #9aaf9b; white-space: nowrap; }
+.lane-score-grid strong, .dodge-score-grid strong { display: block; font-family: Consolas, monospace; font-size: 24px; line-height: 1.6; font-weight: 400; color: #cfd8ba; }
+.lane-score-grid > div:first-child strong { color: #edcf88; }
+.lane-score-grid > div:nth-child(2) strong { color: #d19b84; }
+.lane-score-grid > div:nth-child(3) strong { font-size: 16px; line-height: 38px; }
+.wave-meta { display: flex; align-items: center; justify-content: space-between; gap: 5px; margin-top: 8px; font-size: 10px; color: #819c89; }
+.wave-meta b, .wave-meta time { font-family: Consolas, monospace; font-weight: 400; color: #b8c7a7; }
+.wave-meta time { color: #cabf96; }
+.lane-counts { display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: 10px; color: #8caa96; margin-top: 8px; }
+.lane-counts b { font-weight: 400; }
+.blue-unit { color: #8ac7df; }
+.red-unit { color: #dfaa94; }
+#lane-status { flex-basis: 100%; font-size: 9px; line-height: 1.6; color: #8c9d7f; }
+
+.health-heading { display: flex; justify-content: space-between; gap: 8px; font-size: 10px; color: #a9c2ac; }
+.health-heading b { font-family: Consolas, monospace; font-weight: 400; color: #d6e8cb; margin-left: 5px; }
+#health-status { color: #8bd9bb; }
+.health-track { height: 5px; background: #091c1a; margin: 9px 0 12px; border-radius: 3px; overflow: hidden; }
+.health-track i { display: block; width: 100%; height: 100%; background: #8bd9ad; transition: width .12s; }
+.health-track i.low { background: #ee9b87; }
+.dodge-score-grid strong { color: #b7d9c6; font-size: 22px; }
+.dodge-score-grid > div:first-child strong { color: #eca297; }
+.dodge-score-grid > div:nth-child(2) strong { color: #9fddc9; }
+.skill-meta { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px; font-size: 9px; color: #91a68f; margin-top: 5px; }
+.skill-meta b { font-weight: 400; font-family: Consolas, monospace; color: #d4cfb0; }
+.skill-legend { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 9px; margin-top: 9px; }
+.skill-legend small { font-size: 8px; color: #84977e; margin-left: auto; }
+.piercing-key { color: #e29aef; }
+.spear-key { color: #ff9575; }
+.energy-key { color: #70d1ff; }
+
+.attack-state-row { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; font-size: 10px; color: #8ea48b; }
+.attack-state-row strong { color: #d2ddbe; font-size: 12px; font-weight: 500; }
+.attack-state-row > span:last-child { margin-left: auto; font-size: 9px; }
+.attack-state-row b { font-family: Consolas, monospace; font-weight: 400; color: #cbd4b4; }
+.attack-track { height: 3px; background: #071b17; margin: 9px 0; overflow: hidden; }
+.attack-track i { display: block; height: 100%; width: 0; background: #94d3bb; }
+#combat-readout[data-state="Windup"] .attack-track i { background: #e1bf74; }
+#combat-readout[data-state="Windup"] #attack-state { color: #e1bf74; }
+#attack-description { font-size: 10px; line-height: 1.7; color: #91a38b; }
+.attack-aim { margin-top: 10px; font-size: 10px; line-height: 1.6; color: #92a78a; }
+.attack-aim.armed { color: #e0cb8e; }
+.control-row { display: grid; grid-template-columns: max-content 1fr; align-items: center; gap: 6px 10px; margin-top: 12px; font-size: 10px; color: #a0b29a; }
+.control-row kbd { font-family: inherit; border: 1px solid #8fa18144; padding: 4px 6px; border-radius: 3px; font-size: 10px; color: #d3d9bb; background: #a8bb8f08; text-align: center; }
+.control-separator { display: none; }
+.attack-counters { display: flex; flex-wrap: wrap; gap: 6px 12px; margin-top: 12px; font-size: 9px; color: #819e89; }
+.attack-counters b { font-family: Consolas, monospace; font-weight: 400; color: #c6d5bb; margin-left: 3px; }
+.phase-note { margin: 12px 0 0; font-size: 10px; line-height: 1.7; color: #839780; }
+
+@media (min-width: 1700px) { #arena { --panel-width: 320px; } }
+@media (max-width: 760px) {
+  #arena { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); gap: 8px; padding: 8px; }
+  #arena.sidebar-collapsed { grid-template-rows: minmax(0, 1fr); }
+  #arena.sidebar-collapsed #game { width: min(100%, calc((100dvh - 48px) * 1.4)); }
+  #sidebar-toggle { top: auto; bottom: 16px; right: 16px; }
+  .playfield { place-items: center; }
+  #game { width: min(100%, calc(max(150px, 100dvh - 280px) * 1.4)); height: auto; aspect-ratio: 1540 / 1100; }
+  .controls-panel { padding: 12px; }
+  .game-telemetry { top: 6px; left: 8px; font-size: 10px; }
+}
