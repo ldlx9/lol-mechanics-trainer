@@ -2,6 +2,10 @@
 
 使用 TypeScript、Phaser 3.90、Vite 和 Canvas 的桌面浏览器 ADC 训练模拟器。
 
+在线试玩：[打开游戏](https://ldlx9.github.io/lol-mechanics-trainer/)。推荐电脑浏览器与鼠标操作。
+
+GitHub Pages 自动部署：推送到 `main` 后，工作流会安装依赖、运行测试并构建发布。仓库 Settings → Pages 的 Source 使用 GitHub Actions；无需填写密钥或购买服务器。本地开发仍使用下方启动命令。
+
 **当前版本：0.4.0，第四阶段「屏外技能躲避」已实现。** 已有兵线补刀、走 A、八方向直线技能和生命/躲避统计；完整设置面板留待第五阶段。
 
 ## 安装与运行

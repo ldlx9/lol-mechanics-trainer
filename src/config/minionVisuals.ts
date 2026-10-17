@@ -9,7 +9,7 @@ export interface MinionVisual {
 }
 
 const visual = (team: Team, kind: 'melee' | 'ranged', sourceHeight: number, footX: number, footY: number): MinionVisual => ({
-  key: `minion-${team}-${kind}`, url: `/assets/minions/${team}-${kind}.png`,
+  key: `minion-${team}-${kind}`, url: `${import.meta.env.BASE_URL}assets/minions/${team}-${kind}.png`,
   anchor: { x: footX / 1254, y: footY / 1254 }, sourceHeight,
   height: kind === 'melee' ? 48 : 46,
 });

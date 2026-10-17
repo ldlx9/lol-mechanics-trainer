@@ -15,15 +15,15 @@ export interface SkillshotVisual {
 
 export const SKILLSHOT_VISUALS: Record<SkillshotKind, SkillshotVisual> = {
   piercing: {
-    key: 'skill-piercing', url: '/assets/skillshots/piercing.png',
+    key: 'skill-piercing', url: `${import.meta.env.BASE_URL}assets/skillshots/piercing.png`,
     frame: { x: 37, y: 148, width: 2100, height: 444 }, head: { x: 0.03, y: 0.5 }, rotationOffset: Math.PI, length: 140,
   },
   spear: {
-    key: 'skill-spear', url: '/assets/skillshots/spear.png',
+    key: 'skill-spear', url: `${import.meta.env.BASE_URL}assets/skillshots/spear.png`,
     frame: { x: 5, y: 232, width: 2029, height: 348 }, head: { x: 0.97, y: 0.45 }, rotationOffset: 0, length: 100,
   },
   energy: {
-    key: 'skill-energy', url: '/assets/skillshots/energy.png',
+    key: 'skill-energy', url: `${import.meta.env.BASE_URL}assets/skillshots/energy.png`,
     frame: { x: 150, y: 156, width: 1732, height: 488 }, head: { x: 0.94, y: 0.57 }, rotationOffset: 0, length: 80,
   },
 };

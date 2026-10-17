@@ -7,17 +7,17 @@ export interface PlayerFrame {
 }
 
 const runFrame = (suffix: string): PlayerFrame => ({
-  key: `player-run${suffix}`, url: `/assets/character/move-simple${suffix}.png`,
+  key: `player-run${suffix}`, url: `${import.meta.env.BASE_URL}assets/character/move-simple${suffix}.png`,
   anchor: { x: 650 / 1254, y: 1085 / 1254 }, sourceHeight: 846,
 });
 
 export const PLAYER_FRAMES = {
   idle: {
-    key: 'player-idle', url: '/assets/character/idle-simple.png',
+    key: 'player-idle', url: `${import.meta.env.BASE_URL}assets/character/idle-simple.png`,
     anchor: { x: 610 / 1254, y: 1092 / 1254 }, sourceHeight: 924,
   },
   windup: {
-    key: 'player-windup', url: '/assets/character/windup-simple.png',
+    key: 'player-windup', url: `${import.meta.env.BASE_URL}assets/character/windup-simple.png`,
     anchor: { x: 650 / 1254, y: 1060 / 1254 }, sourceHeight: 874,
   },
   run1: runFrame(''), run2: runFrame('-02'), run3: runFrame('-03'),
